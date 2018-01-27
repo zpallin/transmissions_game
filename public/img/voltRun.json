@@ -1,0 +1,102 @@
+{"frames": {
+
+"volt_run.0.0.png":
+{
+	"frame": {"x":0,"y":0,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.1.png":
+{
+	"frame": {"x":280,"y":0,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.2.png":
+{
+	"frame": {"x":560,"y":0,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.3.png":
+{
+	"frame": {"x":0,"y":385,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.4.png":
+{
+	"frame": {"x":280,"y":385,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.5.png":
+{
+	"frame": {"x":560,"y":385,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.6.png":
+{
+	"frame": {"x":0,"y":770,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.7.png":
+{
+	"frame": {"x":280,"y":770,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.8.png":
+{
+	"frame": {"x":560,"y":770,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"volt_run.0.9.png":
+{
+	"frame": {"x":0,"y":1155,"w":280,"h":385},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":280,"h":385},
+	"sourceSize": {"w":280,"h":385},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "voltRun.png",
+	"format": "RGBA8888",
+	"size": {"w":840,"h":1540},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:406df8ec5d09c994df6061a09002e304:2914f578cda6bb52c5e34160151c5cba:00971f0b975570ac7442b8c966c671b2$"
+}
+}
