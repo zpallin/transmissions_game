@@ -70,8 +70,8 @@ function Entity(name, defaultScale) {
 	this.anim; // currently loaded animation
 	this.anims = {}; // obj of all available animations by key
 	this.move = {
-		x: 0,
-		y: 0,
+		left: false,
+		right: false,
 		speed: 10
 	}
 
@@ -81,9 +81,11 @@ function Entity(name, defaultScale) {
 		size: 1
 	});
 
-	this.scale = JSON.parse(JSON.stringify(defaultScale));
+	this.scale = JSON.parse(
+		JSON.stringify(this.defaultScale)
+	);
 
-	this.speed = 0.5;
+	this.animSpeed = 0.5;
 }
 
 Entity.prototype.mergeScale = function(newScale) {
@@ -91,6 +93,7 @@ Entity.prototype.mergeScale = function(newScale) {
 	this.scale.x 		= defaultValue(newScale.x, this.scale.x);
 	this.scale.y 		= defaultValue(newScale.y, this.scale.y);
 	this.scale.size = defaultValue(newScale.size, this.scale.size);
+	//console.log(this.scale);
 }
 
 Entity.prototype.addAnimation = function(name, pre, post, count) {
@@ -107,6 +110,19 @@ Entity.prototype.addAnimation = function(name, pre, post, count) {
 	this.anim = defaultValue(this.anim, this.anims[name]);
 }
 
+Entity.prototype.moveRight = function() {
+	this.move.right = true;
+}
+
+Entity.prototype.moveLeft = function() {
+	this.move.left = true;
+}
+
+Entity.prototype.moveStop = function() {
+	this.move.left = false;
+	this.move.right = false;
+}
+
 Entity.prototype.setAnimation = function(stage, key, speed, scale) {
 	var stage = defaultValue(stage, false);
 	if (!stage) return null;
@@ -120,12 +136,13 @@ Entity.prototype.setAnimation = function(stage, key, speed, scale) {
 		stage.removeChild(this.anim);
 
 		// add a new animation
-		this.anim = this.anims[key];
-		this.anim.scale.x = scale.x * scale.s;
-		this.anim.scale.y = scale.y * scale.s;
-		this.anim.animationSpeed = speed;
-		this.anim.x = this.pos.x;
-		this.anim.y = this.pos.y;
+		this.anim 								= this.anims[key];
+		this.anim.scale.x 				= this.scale.x * this.scale.size;
+		this.anim.scale.y 				= this.scale.y * this.scale.size;
+		this.anim.animationSpeed 	= speed;
+		this.anim.x 							= this.pos.x;
+		this.anim.y 							= this.pos.y;
+
 		stage.addChild(this.anim);
 	} else {
 		console.error("Anim " + key + " for " + this.name + " does not exist!");
@@ -134,6 +151,9 @@ Entity.prototype.setAnimation = function(stage, key, speed, scale) {
 
 Entity.prototype.animate = function() {
 	if (typeof this.anim !== 'undefined') {
+		this.pos.x += this.move.right? this.move.speed : 0;
+		this.pos.x -= this.move.left? this.move.speed : 0;
+	
 		this.anim.x = this.pos.x;
 		this.anim.y = this.pos.y;
 		this.anim.play();
@@ -146,6 +166,12 @@ Entity.prototype.stopAnimation = function(stage) {
 		stage.removeChild(this.anim);
 	}
 }
+
+////////////////////////////////////////////////////////////////////////////////
+function Track() {
+	
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -169,7 +195,7 @@ function setup(loader, resources) {
 		"idle",
 		"volt_run.0.",
 		".png",
-		"1"
+		1
 	);
 	volt.setAnimation(app.stage, "idle", 0.5); 
 
@@ -178,23 +204,32 @@ function setup(loader, resources) {
 		keys: [KEY.LEFT], 
 		mode: 'down', 
 		action: function() { 
-			volt.setAnimation(app.stage, "run", 0.5, {x:-1, y:1, s:0.1}); 
-			volt.pos.x -= 10;
+			volt.setAnimation(app.stage, "run", 0.5, {x:-1}); 
+			volt.moveLeft();
 		} 
 	});
 	keys.register({ 
 		keys: [KEY.RIGHT], 
 		mode: 'down', 
 		action: function() { 
-			volt.setAnimation(app.stage, "run", 0.5, {x:1, y:1, s:0.1}); 
-			volt.pos.x += 10;
+			volt.setAnimation(app.stage, "run", 0.5, {x:1}); 
+			volt.moveRight();
 		} 
 	});
 	keys.register({ 
-		keys: [KEY.DOWN], 
-		mode: 'down', 
+		keys: [KEY.LEFT], 
+		mode: 'up', 
 		action: function() { 
-			volt.setAnimation(app.stage, "idle", 0.5, {x:1, y:1, s:0.1});
+			volt.setAnimation(app.stage, "idle", 0.5, {x:-1}); 
+			volt.moveStop();
+		} 
+	});
+	keys.register({ 
+		keys: [KEY.RIGHT], 
+		mode: 'up', 
+		action: function() { 
+			volt.setAnimation(app.stage, "idle", 0.5, {x:1}); 
+			volt.moveStop();
 		} 
 	});
 	keys.setListeners();
@@ -203,7 +238,6 @@ function setup(loader, resources) {
 function gameLoop(time) {
   var f = requestAnimationFrame(gameLoop);
   app.renderer.render(app.stage);
-
 	volt.animate();
 }
 
