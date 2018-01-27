@@ -9,8 +9,6 @@ function Entity(name, stage, defaultScale) {
     y: 0
   }
 
-  console.log(this.track.trans);
-
   this.anim; // currently loaded animation
   this.anims = {}; // obj of all available animations by key
   this.move = {
@@ -89,8 +87,6 @@ Entity.prototype.resetPos = function() {
 
 Entity.prototype.animate = function() {
   if (typeof this.anim !== 'undefined') {
-
-    console.log(pos);
 
     this.anim.x = this.pos.x;
     this.anim.y = this.pos.y;

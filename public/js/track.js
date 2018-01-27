@@ -1,5 +1,5 @@
 function Track(trans, regKeys, speed, events) {
-  this.trans    = defaultValue(trans, { startX: 0, startY: 0, endX: 0, endY: 0};
+  this.trans    = defaultValue(trans, { startX: 0, startY: 0, endX: 0, endY: 0});
   this.speed    = defaultValue(speed, 10);
 
   // something happens during a track
