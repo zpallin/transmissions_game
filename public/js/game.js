@@ -8,7 +8,7 @@ const app = new PIXI.Application();
 document.body.appendChild(app.view);
 
 /*
- *	keys
+ * keys
  */
 var KEY = {
   SPACE: 32,
@@ -17,6 +17,14 @@ var KEY = {
   RIGHT: 39,
 	DOWN: 40,
 };
+
+/*
+ * globals
+ */
+var GLOBALS = {
+	effects: [ RainEmitter.init(app.stage) ]
+};
+
 // keys manager
 function Keys() {
   this.registry = [];
@@ -232,11 +240,31 @@ function setup(loader, resources) {
 			volt.moveStop();
 		} 
 	});
+	keys.register({
+		keys: [KEY.SPACE],
+		mode: 'up',
+		action: function() {
+			if (RainEmitter.isEmitting()) {
+				RainEmitter.stop();
+			} else {
+				RainEmitter.start();
+			}
+		}
+	})
 	keys.setListeners();
 }
 
+var elapsed = Date.now();
 function gameLoop(time) {
-  var f = requestAnimationFrame(gameLoop);
+	var f = requestAnimationFrame(gameLoop);
+
+	// Run all screen effects
+	var now = Date.now();
+	for (var effect in GLOBALS.effects) {
+		GLOBALS.effects[effect].update((now - elapsed) * 0.001)
+	}
+	elapsed = now;
+
   app.renderer.render(app.stage);
 	volt.animate();
 }
