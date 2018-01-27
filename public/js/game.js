@@ -8,6 +8,11 @@ const app = new PIXI.Application();
 document.body.appendChild(app.view);
 
 ////////////////////////////////////////////////////////////////////////////////
+
+var GLOBALS = {
+	effects: [ RainEmitter.init(app.stage) ]
+};
+
 var tracks = [];
 
 var firstTrack = new Track(
@@ -46,6 +51,17 @@ var firstTrack = new Track(
 				volt.setAnimation("idle", 0.5, {x:1}); 
 				volt.moveStop();
 			} 
+		},
+		"space": {
+			keys: [KEY.SPACE],
+			mode: 'up',
+			action: function() {
+				if (RainEmitter.isEmitting()) {
+					RainEmitter.stop();
+				} else {
+					RainEmitter.start();
+				}
+			}
 		}
 	});
 
@@ -79,8 +95,17 @@ function setup(loader, resources) {
 
 }
 
+var elapsed = Date.now();
 function gameLoop(time) {
-  var f = requestAnimationFrame(gameLoop);
+	var f = requestAnimationFrame(gameLoop);
+
+	// Run all screen effects
+	var now = Date.now();
+	for (var effect in GLOBALS.effects) {
+		GLOBALS.effects[effect].update((now - elapsed) * 0.001)
+	}
+	elapsed = now;
+
   app.renderer.render(app.stage);
 	if (volt) {
 		volt.animate();
