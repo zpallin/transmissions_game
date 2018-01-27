@@ -12,7 +12,7 @@ var tracks = [];
 
 var firstTrack = new Track(
 	{ 
-		startX: 300, endX: 500, startY: 300, endY
+		startX: 300, endX: 500, startY: 300, endY: 300
 	},
 	{	
 		"leftDown": { 
