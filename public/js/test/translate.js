@@ -8,18 +8,13 @@ const app = new PIXI.Application();
 document.body.appendChild(app.view);
 
 ////////////////////////////////////////////////////////////////////////////////
-
-var GLOBALS = {
-	effects: [ RainEmitter.init(app.stage) ]
-};
-
 var volt;
 var tracks = {};
 
 tracks["first"] = new Track(
 	{ 
 		start: { x: 300, y: 300 },
-		limit: { right: 500, left: 100, up: 300, down: 300 }
+		translate: { right: 500, left: 100, up: 300, down: 300 }
 	},
 	{	
 		"leftDown": {
@@ -53,17 +48,6 @@ tracks["first"] = new Track(
 				volt.setAnimation("idle", 0.5, {x:1}); 
 				volt.unsetMove("right");
 			} 
-		},
-		"space": {
-			keys: [KEY.SPACE],
-			mode: 'up',
-			action: function() {
-				if (RainEmitter.isEmitting()) {
-					RainEmitter.stop();
-				} else {
-					RainEmitter.start();
-				}
-			}
 		}
 	});
 
@@ -79,7 +63,6 @@ PIXI.loader
 
 function setup(loader, resources) {
  	volt = new Entity("volt", app.stage, {size: 0.3});
-	//385x280
 	volt.addAnimation(
 		"run",
 		"volt_run.0.",
@@ -92,20 +75,11 @@ function setup(loader, resources) {
 		".png",
 		1
 	);
-	volt.setAnimation("idle", 0.5); 
+	volt.setAnimation("idle", 0.5);
 }
 
-var elapsed = Date.now();
 function gameLoop(time) {
-	var f = requestAnimationFrame(gameLoop);
-
-	// Run all screen effects
-	var now = Date.now();
-	for (var effect in GLOBALS.effects) {
-		GLOBALS.effects[effect].update((now - elapsed) * 0.001)
-	}
-	elapsed = now;
-
+  var f = requestAnimationFrame(gameLoop);
   app.renderer.render(app.stage);
 	if (volt) {
 		volt.animate();

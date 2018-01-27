@@ -14,9 +14,11 @@ function Entity(name, stage, defaultScale) {
   this.move = {
     left: false,
     right: false,
-    speed: 10,
-    spaceBar: false,
+		up: false,
+		down: false,
+    spaceBar: false
   }
+	this.moveSpeed = 10;
 
   this.defaultScale = {
     x: 1,
@@ -35,12 +37,21 @@ function Entity(name, stage, defaultScale) {
   this.animSpeed = 0.5;
 }
 
+Entity.prototype.unsetMove = function(which) {
+	var which = defaultValue(which, []);
+	if (which.length() === 0) {
+		which = this.move.keys();
+	}
+	for (var key in which) {
+		this.move[key] = false;
+	}
+}
+
 Entity.prototype.mergeScale = function(newScale) {
   var newScale    = defaultValue(newScale, {});
   this.scale.x    = defaultValue(newScale.x, this.scale.x);
   this.scale.y    = defaultValue(newScale.y, this.scale.y);
   this.scale.size = defaultValue(newScale.size, this.scale.size);
-  //console.log(this.scale);
 }
 
 Entity.prototype.addAnimation = function(name, pre, post, count) {
