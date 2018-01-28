@@ -11,12 +11,17 @@ TrackManager.prototype.current = function() {
 
 TrackManager.prototype.addTrack = function(track) {
 	this.tracks.push(track);
+	if (this.tracks.length === 1) {
+		this.current().registerKeys();
+	}
 }
 
 TrackManager.prototype.nextTrack = function() {
 	if (this.hold !== true) {
+		this.current().unregisterKeys();
 		this.idx = (this.idx + 1) % this.tracks.length;
 		this.hold = true;
+		this.current().registerKeys();
 	}
 }
 
@@ -30,9 +35,12 @@ function Track(trans, bound, regKeys, speed, events) {
 
   // keybindings for this track
   this.keys   = defaultValue(regKeys, {});
+}
 
+Track.prototype.registerKeys = function() {
   for (var key in this.keys) {
     keys.register(this.keys[key]);
+		console.log("registering: " + JSON.stringify(this.keys[key]));
   }
   keys.setListeners();
 }
@@ -40,6 +48,7 @@ function Track(trans, bound, regKeys, speed, events) {
 Track.prototype.unregisterKeys = function() {
   for (var key in this.keys) {
     keys.unregister(this.keys[key]);
+		console.log("unregistering: " + JSON.stringify(this.keys[key]));
   }
 }
 
