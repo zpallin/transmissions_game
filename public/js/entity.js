@@ -65,7 +65,7 @@ Entity.prototype.addAnimation = function(name, pre, post, count) {
 
   this.anims[name] = new PIXI.extras.AnimatedSprite(frames);
   this.anims[name].anchor.set(0.5, 0.5);
-
+  
   // if this.anim is not set, set it to the first animation loaded
   this.anim = defaultValue(this.anim, this.anims[name]);
 }
