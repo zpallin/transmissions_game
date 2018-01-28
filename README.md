@@ -13,6 +13,7 @@ For Global Game Jam 2018
 
 ## Credits
 @inbevel13 for background illustration
+www.soundjay.com/ for rain sound
 
 ## How to Contribute
 Check the issues for open issues. Submit a pull request and reference issue number.
