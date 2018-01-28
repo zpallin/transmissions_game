@@ -1,0 +1,30 @@
+{"frames": {
+
+"C1.2.png":
+{
+	"frame": {"x":0,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"C1.3.png":
+{
+	"frame": {"x":80,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "C1_Crying.png",
+	"format": "RGBA8888",
+	"size": {"w":160,"h":60},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:05d4fa1332ff022957317e4a123b6ab7:d311b4c8f954c69f02cdbab1d24f4e8a:59869c25e2b6ddc522fa2c2e1d79d27c$"
+}
+}

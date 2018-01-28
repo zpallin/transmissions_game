@@ -1,0 +1,48 @@
+{"frames": {
+
+"C2.4.png":
+{
+	"frame": {"x":0,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"C2.5.png":
+{
+	"frame": {"x":80,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"C2.6.png":
+{
+	"frame": {"x":160,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"C2.7.png":
+{
+	"frame": {"x":240,"y":0,"w":80,"h":60},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":80,"h":60},
+	"sourceSize": {"w":80,"h":60},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "C2_Run_Profile_Left.png",
+	"format": "RGBA8888",
+	"size": {"w":320,"h":60},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:37f9f73974c689baf178cab2c0be8f94:9b43b68a5dd61bbf4af43b336e2b22f2:424d55686ce9ca17329949bb69212798$"
+}
+}
