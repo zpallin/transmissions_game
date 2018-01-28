@@ -1,7 +1,7 @@
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
-const app = new PIXI.Application({height: 600, width: 600});
+const app = new PIXI.Application({ height: 600, width: 600 });
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
@@ -16,43 +16,45 @@ var GLOBALS = {
 var volt;
 var tracks = {};
 
-tracks["first"] = new Track(
-	{ 
-		start: { x: 300, y: 300 },
-		limit: { right: 500, left: 100, up: 300, down: 300 }
-	},
+var firstTrack = new Track(
+	{ x: 0, y: 0 },
+	[ {x: 0, y: 585}, {x: 600, y: 585}],
 	{	
 		"leftDown": {
 			keys: [KEY.LEFT],
 			mode: 'down',
 			action: function() {
-				volt.setAnimation("run", 0.5, {x:-1});
-				volt.move.left = true;
+				if (!volt.move.left) {
+					volt.setAnimation("run", 0.1, {x:-1});
+					volt.move.left = true;
+				}
 			}
 		},
-		"rightDown": { 
+		"rightDown": {
 			keys: [KEY.RIGHT], 
 			mode: 'down', 
-			action: function() { 
-				volt.setAnimation("run", 0.5, {x:1}); 
-				volt.move.right = true;
+			action: function() {
+				if (!volt.move.right) {
+					volt.setAnimation("run", 0.1, {x:1}); 
+					volt.move.right = true;
+				}
 			}
 		},
 		"leftUp": {
 			keys: [KEY.LEFT],
 			mode: 'up',
 			action: function() {
-				volt.setAnimation("idle", 0.5, {x:-1});
-				volt.unsetMove("left");
+				volt.setAnimation("idle", 0.1, {x:-1});
+				volt.move.left = false;
 			} 
 		},
 		"rightUp": { 
 			keys: [KEY.RIGHT], 
 			mode: 'up', 
 			action: function() { 
-				volt.setAnimation("idle", 0.5, {x:1}); 
-				volt.unsetMove("right");
-			} 
+				volt.setAnimation("idle", 0.1, {x:1}); 
+				volt.move.right = false;
+			}
 		},
 		"space": {
 			keys: [KEY.SPACE],
@@ -74,7 +76,7 @@ tracks["first"] = new Track(
 ////////////////////////////////////////////////////////////////////////////////
 // load the texture we need
 PIXI.loader
-		.add("/public/img/voltRun.json")
+		.add("/public/img/C2_Run_Profile_Right.json")
 		.add("/public/img/GGJ-Scene1-rainy.png")
 		.load(setup);
 
@@ -82,21 +84,22 @@ function setup(loader, resources) {
 	var background = new PIXI.Sprite(
 		PIXI.loader.resources["/public/img/GGJ-Scene1-rainy.png"].texture
 	);
+	// background.position.set(0, -900);
 	background.scale.set(0.2, 0.2);
-	background.position.set(0, 0);
 	app.stage.addChild(background); 
 	
- 	volt = new Entity("volt", app.stage, {size: 0.3});
+	volt = new Entity("volt", app.stage, {size: 0.5});
+	volt.tmgr.tracks.push(firstTrack);
 	//385x280
 	volt.addAnimation(
 		"run",
-		"volt_run.0.",
+		"C2.",
 		".png",
-		10
+		3
 	);
 	volt.addAnimation(
 		"idle",
-		"volt_run.0.",
+		"C2.",
 		".png",
 		1
 	);
