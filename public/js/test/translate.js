@@ -14,7 +14,7 @@ keys.register({
 	mode: 'down',
 	action: function() {
 		trackManager.nextTrack();
-		console.log(trackManager.idx);
+		//console.log(trackManager.idx);
 	}
 });
 
@@ -39,15 +39,15 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.LEFT],
 			mode: 'down',
 			action: function() {
-				volt.setAnimation("run", 0.5, {x:-1});
+				volt.setAnimation("run", 0.1, {x:-1});
 				volt.move.left = true;
 			}
 		},
-		"rightDown": { 
+		"rightDown": {
 			keys: [KEY.RIGHT], 
 			mode: 'down', 
-			action: function() { 
-				volt.setAnimation("run", 0.5, {x:1}); 
+			action: function() {
+				volt.setAnimation("run", 0.1, {x:1}); 
 				volt.move.right = true;
 			}
 		},
@@ -55,7 +55,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.LEFT],
 			mode: 'up',
 			action: function() {
-				volt.setAnimation("idle", 0.5, {x:-1});
+				volt.setAnimation("idle", 0.1, {x:-1});
 				volt.move.left = false;
 			} 
 		},
@@ -63,7 +63,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.RIGHT], 
 			mode: 'up', 
 			action: function() { 
-				volt.setAnimation("idle", 0.5, {x:1}); 
+				volt.setAnimation("idle", 0.1, {x:1}); 
 				volt.move.right = false;
 			}
 		}
@@ -78,7 +78,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.LEFT],
 			mode: 'down',
 			action: function() {
-				volt.setAnimation("run", 0.5, {x:-1});
+				volt.setAnimation("run", 0.1, {x:-1});
 				volt.move.left = true;
 			}
 		},
@@ -86,7 +86,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.RIGHT], 
 			mode: 'down', 
 			action: function() { 
-				volt.setAnimation("run", 0.5, {x:1}); 
+				volt.setAnimation("run", 0.1, {x:1}); 
 				volt.move.right = true;
 			}
 		},
@@ -94,7 +94,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.LEFT],
 			mode: 'up',
 			action: function() {
-				volt.setAnimation("idle", 0.5, {x:-1});
+				volt.setAnimation("idle", 0.1, {x:-1});
 				volt.move.left = false;
 			} 
 		},
@@ -102,7 +102,7 @@ trackManager.tracks.push(new Track(
 			keys: [KEY.RIGHT], 
 			mode: 'up', 
 			action: function() { 
-				volt.setAnimation("idle", 0.5, {x:1}); 
+				volt.setAnimation("idle", 0.1, {x:1}); 
 				volt.move.right = false;
 			}
 		}

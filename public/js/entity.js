@@ -34,7 +34,7 @@ function Entity(name, stage, defaultScale) {
     JSON.stringify(this.defaultScale)
   );
 
-  this.animSpeed = 0.5;
+  this.animSpeed = 0.1;
 }
 
 Entity.prototype.unsetMove = function(which) {
@@ -82,8 +82,7 @@ Entity.prototype.setAnimation = function(key, speed, scale) {
     this.anim.scale.x         = this.scale.x * this.scale.size;
     this.anim.scale.y         = this.scale.y * this.scale.size;
     this.anim.animationSpeed  = speed;
-    this.anim.x               = this.pos.x;
-    this.anim.y               = this.pos.y;
+		this.translatePosition();
 
     this.stage.addChild(this.anim);
   } else {
@@ -112,25 +111,29 @@ Entity.prototype.translateY = function() {
 	var slope = (bound[0].y - bound[1].y) / (bound[0].x - bound[1].x);
 	var transX = this.pos.x + trans.x;
 	var y = slope * (transX - bound[1].x) + bound[1].y
-	console.log(y);
+	//console.log(y);
 	return y;
+}
+
+Entity.prototype.translatePosition = function() {
+	var trans = trackManager.current().trans;
+	this.bound();
+
+	if (this.move.right) {
+		this.pos.x += this.moveSpeed;
+	}
+
+	if (this.move.left) {
+		this.pos.x -= this.moveSpeed;
+	}
+
+	this.anim.x = (this.pos.x + trans.x);
+	this.anim.y = (this.translateY());
 }
 
 Entity.prototype.animate = function() {
   if (typeof this.anim !== 'undefined') {
-		var trans = trackManager.current().trans;
-		this.bound();
-
-		if (this.move.right) {
-			this.pos.x += this.moveSpeed;
-		}
-
-		if (this.move.left) {
-			this.pos.x -= this.moveSpeed;
-		}
-
-    this.anim.x = (this.pos.x + trans.x);
-    this.anim.y = (this.translateY());
+		this.translatePosition();
     this.anim.play();
   }
 }
