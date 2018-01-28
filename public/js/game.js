@@ -14,6 +14,7 @@ var GLOBALS = {
 };
 
 var volt;
+var pedestrians = [];
 var tracks = {};
 
 var firstTrack = new Track(
@@ -78,6 +79,12 @@ var firstTrack = new Track(
 PIXI.loader
 		.add("/public/img/C2_Run_Profile_Right.json")
 		.add("/public/img/GGJ-Scene1-rainy.png")
+		.add("/public/img/C3_Run_Right.json")
+		//.add("/public/img/C4_Run_Right.json")
+		.add("/public/img/C5_Run_Right.json")
+		.add("/public/img/C6_Run_Right.json")
+		.add("/public/img/C7_Run_Right.json")
+		.add("/public/img/C8_Run_Right.json")
 		.load(setup);
 
 function setup(loader, resources) {
@@ -87,6 +94,8 @@ function setup(loader, resources) {
 	// background.position.set(0, -900);
 	background.scale.set(0.2, 0.2);
 	app.stage.addChild(background); 
+
+	pedestrians = generatePedestrians(loader, app.stage);
 	
 	volt = new Entity("volt", app.stage, {size: 0.5});
 	var player = new Player(volt);
@@ -121,6 +130,11 @@ function gameLoop(time) {
   app.renderer.render(app.stage);
 	if (volt) {
 		volt.animate();
+	}
+	if (pedestrians) {
+		for (var ped of pedestrians) {
+			ped.animate();
+		}
 	}
 }
 

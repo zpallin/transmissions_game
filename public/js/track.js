@@ -16,6 +16,10 @@ TrackManager.prototype.addTrack = function(track) {
 	}
 }
 
+TrackManager.prototype.runEvents = function() {
+	this.current().events();
+}
+
 TrackManager.prototype.nextTrack = function() {
 	if (this.hold !== true) {
 		this.current().unregisterKeys();

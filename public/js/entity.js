@@ -92,8 +92,15 @@ Entity.prototype.setAnimation = function(key, speed, scale) {
   }
 }
 
-Entity.prototype.isWithin = function(entity) {
-//	if (this.pos.x > sprite.x - sprite.
+Entity.prototype.isWithin = function(p1, p2) {
+	var trans = this.tmgr.current().trans;
+	if (this.pos.x > p1.x && 
+			this.pos.y > p1.y &&
+			this.pos.x < p2.x &&
+			this.pos.y < p2.y) {
+		return true;
+	}
+	return false;
 }
 
 Entity.prototype.resetPos = function() {
@@ -141,7 +148,9 @@ Entity.prototype.animate = function() {
   if (typeof this.anim !== 'undefined') {
 		this.translatePosition();
     this.anim.play();
+		this.tmgr.runEvents();
   }
+	console.log(this.pos);
 }
 
 Entity.prototype.stopAnimation = function(stage) {
