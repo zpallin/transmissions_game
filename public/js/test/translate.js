@@ -16,7 +16,8 @@ keys.register({
 	mode: 'down',
 	action: function() {
 		volt.tmgr.nextTrack();
-		//console.log(trackManager.idx);
+		out = JSON.stringify(volt.tmgr.tracks[volt.tmgr.idx].bound);
+		console.log(volt.tmgr.idx + ": " + out);
 	}
 });
 
@@ -182,7 +183,8 @@ function setup(loader, resources) {
 	app.stage.addChild(getBgWithName(bgs, "bg-sun"));
 
  	volt = new Entity("volt", app.stage, {size: 0.1});
-	voltTracks();
+//	voltTracks();
+	voltPlayer = new Player(volt);
 	volt.addAnimation(
 		"run",
 		"volt_run.0.",
@@ -196,6 +198,7 @@ function setup(loader, resources) {
 		1
 	);
 	volt.setAnimation("idle", 0.1);
+	volt.tmgr.current().registerKeys();
 }
 
 function gameLoop(time) {
