@@ -8,14 +8,32 @@ const app = new PIXI.Application();
 document.body.appendChild(app.view);
 
 ////////////////////////////////////////////////////////////////////////////////
-var volt;
-var tracks = {};
+// global input
+keys.register({
+	keys: [KEY.ONE],
+	mode: 'down',
+	action: function() {
+		trackManager.nextTrack();
+		console.log(trackManager.idx);
+	}
+});
 
-tracks["first"] = new Track(
-	{ 
-		start: { x: 300, y: 300 },
-		translate: { right: 500, left: 100, up: 300, down: 300 }
-	},
+keys.register({
+	keys: [KEY.ONE],
+	mode: 'up',
+	action: function() {
+		trackManager.hold = false;
+	}
+});
+
+keys.setListeners();
+
+////////////////////////////////////////////////////////////////////////////////
+var volt;
+
+trackManager.tracks.push(new Track(
+	{ x: 50, y: 200 },
+	[ {x: 0, y: 0}, {x: 300, y: 300}],
 	{	
 		"leftDown": {
 			keys: [KEY.LEFT],
@@ -38,7 +56,7 @@ tracks["first"] = new Track(
 			mode: 'up',
 			action: function() {
 				volt.setAnimation("idle", 0.5, {x:-1});
-				volt.unsetMove("left");
+				volt.move.left = false;
 			} 
 		},
 		"rightUp": { 
@@ -46,14 +64,50 @@ tracks["first"] = new Track(
 			mode: 'up', 
 			action: function() { 
 				volt.setAnimation("idle", 0.5, {x:1}); 
-				volt.unsetMove("right");
-			} 
+				volt.move.right = false;
+			}
 		}
-	});
+	}
+));
 
-
-////////////////////////////////////////////////////////////////////////////////
-
+trackManager.tracks.push(new Track(
+	{ x: 100, y: 100 },
+	[ {x: 0, y: 0}, {x: 100, y: 0}],
+	{	
+		"leftDown": {
+			keys: [KEY.LEFT],
+			mode: 'down',
+			action: function() {
+				volt.setAnimation("run", 0.5, {x:-1});
+				volt.move.left = true;
+			}
+		},
+		"rightDown": { 
+			keys: [KEY.RIGHT], 
+			mode: 'down', 
+			action: function() { 
+				volt.setAnimation("run", 0.5, {x:1}); 
+				volt.move.right = true;
+			}
+		},
+		"leftUp": {
+			keys: [KEY.LEFT],
+			mode: 'up',
+			action: function() {
+				volt.setAnimation("idle", 0.5, {x:-1});
+				volt.move.left = false;
+			} 
+		},
+		"rightUp": { 
+			keys: [KEY.RIGHT], 
+			mode: 'up', 
+			action: function() { 
+				volt.setAnimation("idle", 0.5, {x:1}); 
+				volt.move.right = false;
+			}
+		}
+	}
+));
 
 ////////////////////////////////////////////////////////////////////////////////
 // load the texture we need
@@ -87,3 +141,4 @@ function gameLoop(time) {
 }
 
 gameLoop();
+

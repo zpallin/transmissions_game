@@ -3,12 +3,14 @@
  */
 const keys = new Keys();
 var KEY = {
+	ONE: 49,
   SPACE: 32,
   LEFT: 37,
   UP: 38,
   RIGHT: 39,
   DOWN: 40,
 };
+var PRESSED = [];
 
 // keys manager
 function Keys() {

@@ -39,7 +39,7 @@ function Entity(name, stage, defaultScale) {
 
 Entity.prototype.unsetMove = function(which) {
 	var which = defaultValue(which, []);
-	if (which.length() === 0) {
+	if (which.length === 0) {
 		which = this.move.keys();
 	}
 	for (var key in which) {
@@ -96,11 +96,41 @@ Entity.prototype.resetPos = function() {
   this.pos.y = 0;
 }
 
+Entity.prototype.bound = function() {
+	var bound = trackManager.current().bound;
+	if (this.pos.x < bound[0].x) {
+		this.pos.x = bound[0].x;
+	}
+	if (this.pos.x > bound[1].x) {
+		this.pos.x = bound[1].x;
+	}
+}
+
+Entity.prototype.translateY = function() {
+	var	bound = trackManager.current().bound;
+	var trans = trackManager.current().trans;
+	var slope = (bound[0].y - bound[1].y) / (bound[0].x - bound[1].x);
+	var transX = this.pos.x + trans.x;
+	var y = slope * (transX - bound[1].x) + bound[1].y
+	console.log(y);
+	return y;
+}
+
 Entity.prototype.animate = function() {
   if (typeof this.anim !== 'undefined') {
+		var trans = trackManager.current().trans;
+		this.bound();
 
-    this.anim.x = this.pos.x;
-    this.anim.y = this.pos.y;
+		if (this.move.right) {
+			this.pos.x += this.moveSpeed;
+		}
+
+		if (this.move.left) {
+			this.pos.x -= this.moveSpeed;
+		}
+
+    this.anim.x = (this.pos.x + trans.x);
+    this.anim.y = (this.translateY());
     this.anim.play();
   }
 }
