@@ -1,5 +1,7 @@
-# Transmission Game
-For Global Game Jam 2018
+# Rainy Days
+Explore the city, find your purpose and transform the city! 
+
+Built at Global Game Jam 2018.
 
 ## Technologies
 - Express: 4.16.2,
@@ -13,6 +15,7 @@ For Global Game Jam 2018
 
 ## Credits
 @inbevel13 for background illustration
+www.soundjay.com/ for rain sound
 
 ## How to Contribute
 Check the issues for open issues. Submit a pull request and reference issue number.
