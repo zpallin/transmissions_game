@@ -9,19 +9,23 @@ function Entity(name, stage, defaultScale) {
     y: 0
   }
 
+	this.tmgr = new TrackManager();
+
   this.anim; // currently loaded animation
   this.anims = {}; // obj of all available animations by key
   this.move = {
     left: false,
     right: false,
-    speed: 10,
-    spaceBar: false,
+		up: false,
+		down: false,
+    spaceBar: false
   }
+	this.moveSpeed = 1;
 
   this.defaultScale = {
     x: 1,
     y: 1,
-    size: 1
+    size: 0.01
   };
 
   this.defaultScale.x = defaultValue(defaultScale.x, this.defaultScale.x);
@@ -32,7 +36,17 @@ function Entity(name, stage, defaultScale) {
     JSON.stringify(this.defaultScale)
   );
 
-  this.animSpeed = 0.5;
+  this.animSpeed = 0.1;
+}
+
+Entity.prototype.unsetMove = function(which) {
+	var which = defaultValue(which, []);
+	if (which.length === 0) {
+		which = this.move.keys();
+	}
+	for (var key in which) {
+		this.move[key] = false;
+	}
 }
 
 Entity.prototype.mergeScale = function(newScale) {
@@ -40,7 +54,6 @@ Entity.prototype.mergeScale = function(newScale) {
   this.scale.x    = defaultValue(newScale.x, this.scale.x);
   this.scale.y    = defaultValue(newScale.y, this.scale.y);
   this.scale.size = defaultValue(newScale.size, this.scale.size);
-  //console.log(this.scale);
 }
 
 Entity.prototype.addAnimation = function(name, pre, post, count) {
@@ -71,8 +84,7 @@ Entity.prototype.setAnimation = function(key, speed, scale) {
     this.anim.scale.x         = this.scale.x * this.scale.size;
     this.anim.scale.y         = this.scale.y * this.scale.size;
     this.anim.animationSpeed  = speed;
-    this.anim.x               = this.pos.x;
-    this.anim.y               = this.pos.y;
+		this.translatePosition();
 
     this.stage.addChild(this.anim);
   } else {
@@ -80,16 +92,54 @@ Entity.prototype.setAnimation = function(key, speed, scale) {
   }
 }
 
+Entity.prototype.isWithin = function(entity) {
+//	if (this.pos.x > sprite.x - sprite.
+}
+
 Entity.prototype.resetPos = function() {
   this.pos.x = 0;
   this.pos.y = 0;
 }
 
+Entity.prototype.bound = function() {
+	var bound = this.tmgr.current().bound;
+	if (this.pos.x < bound[0].x) {
+		this.pos.x = bound[0].x;
+	}
+	if (this.pos.x > bound[1].x) {
+		this.pos.x = bound[1].x;
+	}
+}
+
+Entity.prototype.translateY = function() {
+	var	bound = this.tmgr.current().bound;
+	var trans = this.tmgr.current().trans;
+	var slope = (bound[0].y - bound[1].y) / (bound[0].x - bound[1].x);
+	var transX = this.pos.x + trans.x;
+	var y = slope * (transX - bound[1].x) + bound[1].y
+	//console.log(y);
+	return y;
+}
+
+Entity.prototype.translatePosition = function() {
+	var trans = this.tmgr.current().trans;
+	this.bound();
+
+	if (this.move.right) {
+		this.pos.x += this.moveSpeed;
+	}
+
+	if (this.move.left) {
+		this.pos.x -= this.moveSpeed;
+	}
+
+	this.anim.x = (this.pos.x + trans.x);
+	this.anim.y = (this.translateY());
+}
+
 Entity.prototype.animate = function() {
   if (typeof this.anim !== 'undefined') {
-
-    this.anim.x = this.pos.x;
-    this.anim.y = this.pos.y;
+		this.translatePosition();
     this.anim.play();
   }
 }

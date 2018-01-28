@@ -13,19 +13,21 @@ var GLOBALS = {
 	effects: [ RainEmitter.init(app.stage) ]
 };
 
-var tracks = [];
+var volt;
+var tracks = {};
 
-var firstTrack = new Track(
+tracks["first"] = new Track(
 	{ 
-		startX: 300, endX: 500, startY: 300, endY: 300
+		start: { x: 300, y: 300 },
+		limit: { right: 500, left: 100, up: 300, down: 300 }
 	},
 	{	
-		"leftDown": { 
-			keys: [KEY.LEFT], 
-			mode: 'down', 
-			action: function() { 
-				volt.setAnimation("run", 0.5, {x:-1}); 
-				volt.moveLeft();
+		"leftDown": {
+			keys: [KEY.LEFT],
+			mode: 'down',
+			action: function() {
+				volt.setAnimation("run", 0.5, {x:-1});
+				volt.move.left = true;
 			}
 		},
 		"rightDown": { 
@@ -33,15 +35,15 @@ var firstTrack = new Track(
 			mode: 'down', 
 			action: function() { 
 				volt.setAnimation("run", 0.5, {x:1}); 
-				volt.moveRight();
-			} 
+				volt.move.right = true;
+			}
 		},
-		"leftUp": { 
-			keys: [KEY.LEFT], 
-			mode: 'up', 
-			action: function() { 
-				volt.setAnimation("idle", 0.5, {x:-1}); 
-				volt.moveStop();
+		"leftUp": {
+			keys: [KEY.LEFT],
+			mode: 'up',
+			action: function() {
+				volt.setAnimation("idle", 0.5, {x:-1});
+				volt.unsetMove("left");
 			} 
 		},
 		"rightUp": { 
@@ -49,7 +51,7 @@ var firstTrack = new Track(
 			mode: 'up', 
 			action: function() { 
 				volt.setAnimation("idle", 0.5, {x:1}); 
-				volt.moveStop();
+				volt.unsetMove("right");
 			} 
 		},
 		"space": {
@@ -68,7 +70,6 @@ var firstTrack = new Track(
 
 ////////////////////////////////////////////////////////////////////////////////
 
-var volt;
 
 ////////////////////////////////////////////////////////////////////////////////
 // load the texture we need
@@ -92,7 +93,6 @@ function setup(loader, resources) {
 		1
 	);
 	volt.setAnimation("idle", 0.5); 
-
 }
 
 var elapsed = Date.now();
