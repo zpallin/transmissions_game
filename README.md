@@ -11,6 +11,9 @@ For Global Game Jam 2018
 2. Run ```npm install```
 3. Run ```npm start```
 
+## Credits
+@inbevel13 for background illustration
+
 ## How to Contribute
 Check the issues for open issues. Submit a pull request and reference issue number.
 
