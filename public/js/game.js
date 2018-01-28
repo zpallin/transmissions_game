@@ -15,6 +15,27 @@ var GLOBALS = {
 
 var volt;
 var tracks = {};
+var rainyBackground;
+var sunnyBackground;
+var sunnyBackgroundAlpha = 0;
+
+var animateToSunny = function(delta) {
+	if (sunnyBackground.alpha <= 1) {
+		sunnyBackground.alpha += 0.01;
+	}
+	if (sunnyBackground.alpha >= 0.5) {
+		RainEmitter.stop();
+	}
+}
+
+var animateToRainy = function(delta) {
+	if (sunnyBackground.alpha >= 0) {
+		sunnyBackground.alpha -= 0.01;
+	}
+	if (sunnyBackground.alpha <= 0.5) {
+		RainEmitter.start();
+	}
+}
 
 var firstTrack = new Track(
 	{ x: 0, y: 0 },
@@ -61,9 +82,11 @@ var firstTrack = new Track(
 			mode: 'up',
 			action: function() {
 				if (RainEmitter.isEmitting()) {
-					RainEmitter.stop();
+					app.ticker.remove(animateToSunny);
+					app.ticker.add(animateToRainy);
 				} else {
-					RainEmitter.start();
+					app.ticker.remove(animateToRainy);
+					app.ticker.add(animateToSunny);
 				}
 			}
 		}
@@ -78,15 +101,23 @@ var firstTrack = new Track(
 PIXI.loader
 		.add("/public/img/C2_Run_Profile_Right.json")
 		.add("/public/img/GGJ-Scene1-rainy.png")
+		.add("/public/img/scene1-sunny.png")
 		.load(setup);
 
 function setup(loader, resources) {
-	var background = new PIXI.Sprite(
+	rainyBackground = new PIXI.Sprite(
 		PIXI.loader.resources["/public/img/GGJ-Scene1-rainy.png"].texture
 	);
-	// background.position.set(0, -900);
-	background.scale.set(0.2, 0.2);
-	app.stage.addChild(background); 
+	rainyBackground.scale.set(0.2, 0.2);
+	app.stage.addChild(rainyBackground); 
+
+	sunnyBackground = new PIXI.Sprite(
+		PIXI.loader.resources["/public/img/scene1-sunny.png"].texture
+	);
+	sunnyBackground.scale.set(0.2, 0.2);
+	sunnyBackground.alpha = 1;
+		RainEmitter.stop();
+	app.stage.addChild(sunnyBackground);
 	
 	volt = new Entity("volt", app.stage, {size: 0.5});
 	var player = new Player(volt);
