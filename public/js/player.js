@@ -79,7 +79,7 @@ function Player(entity) {
 	this.entity = entity;
 	for (var track of tracks_raw) {
 		console.log(track);
-		this.entity.tmgr.tracks.push(new Track(
+		this.entity.tmgr.addTrack(new Track(
 			{ x: 0, y: 0 },
 			track,
 			standardLeftRightKeys(),

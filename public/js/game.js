@@ -89,7 +89,8 @@ function setup(loader, resources) {
 	app.stage.addChild(background); 
 	
 	volt = new Entity("volt", app.stage, {size: 0.5});
-	volt.tmgr.tracks.push(firstTrack);
+	var player = new Player(volt);
+//	volt.tmgr.addTrack(firstTrack);
 	//385x280
 	volt.addAnimation(
 		"run",
