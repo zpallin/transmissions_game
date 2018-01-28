@@ -150,7 +150,7 @@ Entity.prototype.animate = function() {
     this.anim.play();
 		this.tmgr.runEvents();
   }
-	console.log(this.pos);
+	//console.log(this.pos);
 }
 
 Entity.prototype.stopAnimation = function(stage) {

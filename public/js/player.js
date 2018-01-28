@@ -77,14 +77,26 @@ function standardLeftRightKeys() {
 
 function Player(entity) {
 	this.entity = entity;
-	for (var track of tracks_raw) {
-		console.log(track);
+	for (var idx in tracks_raw) {
+		var track = tracks_raw[idx];
+		console.log("TRACK : " + JSON.stringify(track));
+		var dis = this;
 		this.entity.tmgr.addTrack(new Track(
 			{ x: 0, y: 0 },
 			track,
 			standardLeftRightKeys(),
 			0.1
 		));
+
+		
+		this.entity.tmgr.lastTrack().events = function(tmgr) {
+				var track = tmgr.current();
+				console.log("BOUND: " + dis.entity.pos.x + " : " + track.bound[1].x);
+				if (dis.entity.pos.x >= track.bound[1].x) {
+					dis.entity.resetPos();
+					tmgr.nextTrack();
+				}
+			}
 	}
 }
 

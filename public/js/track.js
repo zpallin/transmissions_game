@@ -9,6 +9,10 @@ TrackManager.prototype.current = function() {
 	return this.tracks[this.idx];
 }
 
+TrackManager.prototype.lastTrack = function() {
+	return this.tracks[this.tracks.length - 1];
+}
+
 TrackManager.prototype.addTrack = function(track) {
 	this.tracks.push(track);
 	if (this.tracks.length === 1) {
@@ -17,7 +21,8 @@ TrackManager.prototype.addTrack = function(track) {
 }
 
 TrackManager.prototype.runEvents = function() {
-	this.current().events();
+//	console.log("Events for " + JSON.stringify(this.current().bound));
+	this.current().events(this);
 }
 
 TrackManager.prototype.nextTrack = function() {
