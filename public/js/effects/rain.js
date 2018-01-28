@@ -5,24 +5,24 @@ var RainEmitter = {
       [PIXI.Texture.fromImage('/public/img/HardRain.png')],
       {
         "alpha": {
-          "start": 0.5,
-          "end": 0.5
+          "start": 0.2,
+          "end": 0.9
         },
         "scale": {
-          "start": 1,
-          "end": 1
+          "start": 0.3,
+          "end": 0.3
         },
         "color": {
-          "start": "ffffff",
-          "end": "ffffff"
+          "start": "f1f3f4",
+          "end": "f1f3f4"
         },
         "speed": {
-          "start": 3000,
-          "end": 3000
+          "start": 1000,
+          "end": 1000
         },
         "startRotation": {
-          "min": 65,
-          "max": 65
+          "min": 90,
+          "max": 90
         },
         "rotationSpeed": {
           "min": 0,
@@ -35,7 +35,7 @@ var RainEmitter = {
         "blendMode": "normal",
         "frequency": 0.004,
         "emitterLifetime": 0,
-        "maxParticles": 1000,
+        "maxParticles": 5000,
         "pos": {
           "x": 0,
           "y": 0
@@ -43,9 +43,9 @@ var RainEmitter = {
         "addAtBack": false,
         "spawnType": "rect",
         "spawnRect": {
-          "x": -600,
-          "y": -460,
-          "w": 900,
+          "x": 0,
+          "y": 0,
+          "w": 600,
           "h": 20
         }
     });

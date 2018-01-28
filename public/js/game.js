@@ -1,7 +1,7 @@
 // The application will create a renderer using WebGL, if possible,
 // with a fallback to a canvas render. It will also setup the ticker
 // and the root stage PIXI.Container
-const app = new PIXI.Application();
+const app = new PIXI.Application({height: 600, width: 600});
 
 // The application will create a canvas element for you that you
 // can then insert into the DOM
@@ -75,9 +75,17 @@ tracks["first"] = new Track(
 // load the texture we need
 PIXI.loader
 		.add("/public/img/voltRun.json")
+		.add("/public/img/GGJ-Scene1-rainy.png")
 		.load(setup);
 
 function setup(loader, resources) {
+	var background = new PIXI.Sprite(
+		PIXI.loader.resources["/public/img/GGJ-Scene1-rainy.png"].texture
+	);
+	background.scale.set(0.2, 0.2);
+	background.position.set(0, 0);
+	app.stage.addChild(background); 
+	
  	volt = new Entity("volt", app.stage, {size: 0.3});
 	//385x280
 	volt.addAnimation(
@@ -92,7 +100,7 @@ function setup(loader, resources) {
 		".png",
 		1
 	);
-	volt.setAnimation("idle", 0.5); 
+	volt.setAnimation("idle", 0.5);
 }
 
 var elapsed = Date.now();
