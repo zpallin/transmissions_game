@@ -6,6 +6,8 @@ const app = new PIXI.Application();
 // The application will create a canvas element for you that you
 // can then insert into the DOM
 document.body.appendChild(app.view);
+var volt;
+var background;
 
 ////////////////////////////////////////////////////////////////////////////////
 // global input
@@ -13,7 +15,7 @@ keys.register({
 	keys: [KEY.ONE],
 	mode: 'down',
 	action: function() {
-		trackManager.nextTrack();
+		volt.tmgr.nextTrack();
 		//console.log(trackManager.idx);
 	}
 });
@@ -22,101 +24,119 @@ keys.register({
 	keys: [KEY.ONE],
 	mode: 'up',
 	action: function() {
-		trackManager.hold = false;
+		volt.tmgr.hold = false;
 	}
 });
 
 keys.setListeners();
 
 ////////////////////////////////////////////////////////////////////////////////
-var volt;
 
-trackManager.tracks.push(new Track(
-	{ x: 50, y: 200 },
-	[ {x: 0, y: 0}, {x: 300, y: 300}],
-	{	
-		"leftDown": {
-			keys: [KEY.LEFT],
-			mode: 'down',
-			action: function() {
-				volt.setAnimation("run", 0.1, {x:-1});
-				volt.move.left = true;
-			}
-		},
-		"rightDown": {
-			keys: [KEY.RIGHT], 
-			mode: 'down', 
-			action: function() {
-				volt.setAnimation("run", 0.1, {x:1}); 
-				volt.move.right = true;
-			}
-		},
-		"leftUp": {
-			keys: [KEY.LEFT],
-			mode: 'up',
-			action: function() {
-				volt.setAnimation("idle", 0.1, {x:-1});
-				volt.move.left = false;
-			} 
-		},
-		"rightUp": { 
-			keys: [KEY.RIGHT], 
-			mode: 'up', 
-			action: function() { 
-				volt.setAnimation("idle", 0.1, {x:1}); 
-				volt.move.right = false;
+function voltTracks() {
+	volt.tmgr.tracks.push(new Track(
+		{ x: 200, y: 0 },
+		[ {x: 0, y: 590}, {x: 600, y: 590}],
+		{	
+			"leftDown": {
+				keys: [KEY.LEFT],
+				mode: 'down',
+				action: function() {
+					if (!volt.move.left) {
+						volt.setAnimation("run", 0.1, {x:-1});
+						volt.move.left = true;
+					}
+				}
+			},
+			"rightDown": {
+				keys: [KEY.RIGHT], 
+				mode: 'down', 
+				action: function() {
+					if (!volt.move.right) {
+						volt.setAnimation("run", 0.1, {x:1}); 
+						volt.move.right = true;
+					}
+				}
+			},
+			"leftUp": {
+				keys: [KEY.LEFT],
+				mode: 'up',
+				action: function() {
+					volt.setAnimation("idle", 0.1, {x:-1});
+					volt.move.left = false;
+				} 
+			},
+			"rightUp": { 
+				keys: [KEY.RIGHT], 
+				mode: 'up', 
+				action: function() { 
+					volt.setAnimation("idle", 0.1, {x:1}); 
+					volt.move.right = false;
+				}
+			},
+			"spacebar": {
+				keys: [KEY.SPACE],
+				mode: 'down',
+				action: function() {
+				}
 			}
 		}
-	}
-));
-
-trackManager.tracks.push(new Track(
-	{ x: 100, y: 100 },
-	[ {x: 0, y: 0}, {x: 100, y: 0}],
-	{	
-		"leftDown": {
-			keys: [KEY.LEFT],
-			mode: 'down',
-			action: function() {
-				volt.setAnimation("run", 0.1, {x:-1});
-				volt.move.left = true;
-			}
-		},
-		"rightDown": { 
-			keys: [KEY.RIGHT], 
-			mode: 'down', 
-			action: function() { 
-				volt.setAnimation("run", 0.1, {x:1}); 
-				volt.move.right = true;
-			}
-		},
-		"leftUp": {
-			keys: [KEY.LEFT],
-			mode: 'up',
-			action: function() {
-				volt.setAnimation("idle", 0.1, {x:-1});
-				volt.move.left = false;
-			} 
-		},
-		"rightUp": { 
-			keys: [KEY.RIGHT], 
-			mode: 'up', 
-			action: function() { 
-				volt.setAnimation("idle", 0.1, {x:1}); 
-				volt.move.right = false;
+	));
+	volt.tmgr.tracks.push(new Track(
+		{ x: 100, y: 100 },
+		[ {x: 0, y: 0}, {x: 100, y: 0}],
+		{	
+			"leftDown": {
+				keys: [KEY.LEFT],
+				mode: 'down',
+				action: function() {
+					volt.setAnimation("run", 0.1, {x:-1});
+					volt.move.left = true;
+				}
+			},
+			"rightDown": { 
+				keys: [KEY.RIGHT], 
+				mode: 'down', 
+				action: function() { 
+					volt.setAnimation("run", 0.1, {x:1}); 
+					volt.move.right = true;
+				}
+			},
+			"leftUp": {
+				keys: [KEY.LEFT],
+				mode: 'up',
+				action: function() {
+					volt.setAnimation("idle", 0.1, {x:-1});
+					volt.move.left = false;
+				} 
+			},
+			"rightUp": { 
+				keys: [KEY.RIGHT], 
+				mode: 'up', 
+				action: function() { 
+					volt.setAnimation("idle", 0.1, {x:1}); 
+					volt.move.right = false;
+				}
 			}
 		}
-	}
-));
-
+	));
+}
 ////////////////////////////////////////////////////////////////////////////////
 // load the texture we need
 PIXI.loader
 		.add("/public/img/voltRun.json")
+		.add("/public/img/bg.png")
 		.load(setup);
 
 function setup(loader, resources) {
- 	volt = new Entity("volt", app.stage, {size: 0.3});
+	var background = new PIXI.Sprite(
+		PIXI.loader.resources["/public/img/bg.png"].texture
+	);
+	background.scale.set(0.789, 0.589);
+	background.position.set(0, 0);
+	app.stage.addChild(background);
+
+ 	volt = new Entity("volt", app.stage, {size: 0.1});
+	voltTracks();
 	volt.addAnimation(
 		"run",
 		"volt_run.0.",
@@ -129,7 +149,7 @@ function setup(loader, resources) {
 		".png",
 		1
 	);
-	volt.setAnimation("idle", 0.5);
+	volt.setAnimation("idle", 0.1);
 }
 
 function gameLoop(time) {

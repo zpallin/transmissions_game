@@ -9,6 +9,8 @@ function Entity(name, stage, defaultScale) {
     y: 0
   }
 
+	this.tmgr = new TrackManager();
+
   this.anim; // currently loaded animation
   this.anims = {}; // obj of all available animations by key
   this.move = {
@@ -18,12 +20,12 @@ function Entity(name, stage, defaultScale) {
 		down: false,
     spaceBar: false
   }
-	this.moveSpeed = 10;
+	this.moveSpeed = 1;
 
   this.defaultScale = {
     x: 1,
     y: 1,
-    size: 1
+    size: 0.01
   };
 
   this.defaultScale.x = defaultValue(defaultScale.x, this.defaultScale.x);
@@ -90,13 +92,17 @@ Entity.prototype.setAnimation = function(key, speed, scale) {
   }
 }
 
+Entity.prototype.isWithin = function(entity) {
+//	if (this.pos.x > sprite.x - sprite.
+}
+
 Entity.prototype.resetPos = function() {
   this.pos.x = 0;
   this.pos.y = 0;
 }
 
 Entity.prototype.bound = function() {
-	var bound = trackManager.current().bound;
+	var bound = this.tmgr.current().bound;
 	if (this.pos.x < bound[0].x) {
 		this.pos.x = bound[0].x;
 	}
@@ -106,8 +112,8 @@ Entity.prototype.bound = function() {
 }
 
 Entity.prototype.translateY = function() {
-	var	bound = trackManager.current().bound;
-	var trans = trackManager.current().trans;
+	var	bound = this.tmgr.current().bound;
+	var trans = this.tmgr.current().trans;
 	var slope = (bound[0].y - bound[1].y) / (bound[0].x - bound[1].x);
 	var transX = this.pos.x + trans.x;
 	var y = slope * (transX - bound[1].x) + bound[1].y
@@ -116,7 +122,7 @@ Entity.prototype.translateY = function() {
 }
 
 Entity.prototype.translatePosition = function() {
-	var trans = trackManager.current().trans;
+	var trans = this.tmgr.current().trans;
 	this.bound();
 
 	if (this.move.right) {
