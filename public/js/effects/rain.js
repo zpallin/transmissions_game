@@ -45,7 +45,7 @@ var RainEmitter = {
         "spawnRect": {
           "x": 0,
           "y": 0,
-          "w": 600,
+          "w": 800,
           "h": 20
         }
     });

@@ -1,6 +1,6 @@
 {"frames": {
 
-"C2.8.png":
+"C2.0.png":
 {
 	"frame": {"x":0,"y":0,"w":80,"h":60},
 	"rotated": false,
@@ -9,7 +9,7 @@
 	"sourceSize": {"w":80,"h":60},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"C2.9.png":
+"C2.1.png":
 {
 	"frame": {"x":80,"y":0,"w":80,"h":60},
 	"rotated": false,
@@ -18,7 +18,7 @@
 	"sourceSize": {"w":80,"h":60},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"C2.10.png":
+"C2.2.png":
 {
 	"frame": {"x":160,"y":0,"w":80,"h":60},
 	"rotated": false,
@@ -27,7 +27,7 @@
 	"sourceSize": {"w":80,"h":60},
 	"pivot": {"x":0.5,"y":0.5}
 },
-"C2.11.png":
+"C2.3.png":
 {
 	"frame": {"x":240,"y":0,"w":80,"h":60},
 	"rotated": false,
